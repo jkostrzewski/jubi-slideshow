@@ -39,7 +39,25 @@
 			#logo img {
 				width:100%;
 			}
+
+		div.mc-image {
+			transform:scale(1.2);
+			transition: opacity 1s ease-in-out;
+			background-size: contain;			
+		}
+
+		#logo-container{
+			position:absolute; 
+			right:10px; 
+			bottom:10px;
+		}
+		.logo{
+			display:inline-block;
+		}
+		.logo img{
 			
+		}
+
 		</style>
 		
 		<!--[if IE 6]>
@@ -51,14 +69,22 @@
 	</head>
 	<body>
 		<div id="maximage">
-			<img src="lib/images/demo/wall_portrait.jpg" alt="" width="1400" height="1050" />
-			<img src="lib/images/demo/coalesse.jpg" alt="Coalesse" width="1400" height="1050" />
-			<img src="lib/images/demo/laughing.jpg" alt="" width="1400" height="1050" />
-			<img src="lib/images/demo/roof_shooting.jpg" alt="" width="2048" height="1536" />
-			<img src="lib/images/demo/man.jpg" alt="" width="2048" height="1536" />
-			<img src="lib/images/demo/coffee_shop.jpg" alt="" width="2048" height="1536" />
-			<img src="lib/images/demo/gas_station.jpg" alt="" width="2048" height="1536" />
+		<?php
+			foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator('images/slideshow/')) as $filename)
+				{
+					if (preg_match("/(jpg|gif|png)$/", $filename)){
+						echo "<img src='$filename'/>	";	
+					}
+				}
+		?>
 		</div>
+
+		<div id="logo-container">
+			<div class="logo">
+				<img src="images/logo/lazur.jpg">
+			</div>
+		</div>
+
 		
 		<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js'></script>
 		<script src="lib/js/jquery.cycle.all.js" type="text/javascript" charset="utf-8"></script>
@@ -67,7 +93,15 @@
 		<script type="text/javascript" charset="utf-8">
 			$(function(){
 				// Trigger maximage
-				jQuery('#maximage').maximage();
+				jQuery('#maximage').maximage({
+				cycleOptions: {
+				fx: 'fade',
+				speed: 'slow',
+				'timeout': '10000',
+				},
+				fillElement: '#holder',
+				
+			});
 			});
 		</script>
 		
